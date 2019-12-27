@@ -20,11 +20,19 @@ mongoose.set('useCreateIndex', true);
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 connect.then((db) => {
-    console.log("Connected correctly to server");
+    console.log("Connected correctly to data");
 }, (err) => { console.log(err); });
 
 
 var app = express();
+app.all('*', (req, res, next)=> {
+  if (req.secure) {
+    return next()
+  }
+  else {
+    res.redirect(307, 'https://'+ req.hostname + ':' + app.get('secPort') + req.url);
+  }
+})
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
