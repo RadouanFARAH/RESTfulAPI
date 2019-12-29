@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var favoriteRouter = require('./routes/favoriteRouter');
 var dishRouter = require('./routes/dishRouter');
 var uploadRouter = require('./routes/uploadRouter');
 var leaderRouter = require('./routes/leaderRouter');
@@ -15,7 +16,6 @@ var authenticate = require('./authenticate');
 var config = require('./config');
 const url = config.mongoUrl;
 
-const Dishes = require('./models/dishes');
 
 mongoose.set('useCreateIndex', true);
 const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -59,6 +59,7 @@ app.use('/leaders',leaderRouter);
 app.use('/promotions',promotionRouter);
 app.use('/dishes',dishRouter);
 app.use('/imageUpload',uploadRouter);
+app.use('/favorites',favoriteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
